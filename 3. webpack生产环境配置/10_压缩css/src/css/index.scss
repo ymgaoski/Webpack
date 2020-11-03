@@ -1,0 +1,13 @@
+.container{
+  background-color: green;
+  
+  .box{
+    width: 100px;
+    height: 100px;
+    margin: 20px;
+    background: red;
+    display: flex;
+    /* 生成后自动添加兼容代码 */
+    backface-visibility: hidden;
+  }  
+}

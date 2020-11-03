@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>打包图片资源</title>
+</head>
+<body>
+  <div class="container">
+    <!-- 用 url-loader来处理style文件里面的图片地址，它会引用 file-loader，所以两个都要下载 -->
+    <div class="pic1"></div>
+    <div class="pic2"></div>
+    <div class="pic3"></div>
+    <!-- 需要用 html-loader来处理 html文件里面的 img 图片地址 -->
+    <img class="pic4" src="78235c273f.jpg" alt="" />
+  </div>
+<script src="build.js"></script></body>
+</html>

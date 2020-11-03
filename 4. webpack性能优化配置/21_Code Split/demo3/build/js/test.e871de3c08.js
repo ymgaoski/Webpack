@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{2:function(n,t,u){"use strict";u.r(t),u.d(t,"sub",(function(){return o})),u.d(t,"mul",(function(){return c}));var e=u(0),r=u.n(e);function o(n,t){return n-t}function c(n,t){return n*t}r()(".item").css("background","green").width(100).height(100),console.log(r.a,"test jquery")}}]);
