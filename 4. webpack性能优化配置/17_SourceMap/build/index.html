@@ -1,28 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HMR热更新</title>
-</head>
-<body>
-  <div class="container">
-    <div>
-      <h1>HMR热更新</h1>
-
-      <h1>iconfont的使用</h1>
-      <span class="iconfont icon-moshi"></span>
-      <span class="iconfont icon-liaotian_huaban1"></span>
-      <span class="iconfont icon-chanpinshangcheng_huaban1"></span>
-      <span class="iconfont icon-dingdanguanli_huaban1"></span>
-    </div>
-    <div>
-      <h1>图片的的使用</h1>
-      <div class="pic1"></div>
-      <div class="pic2"></div>
-      <div class="pic3"></div>
-      <img class="pic4" src="img/78235c273f.jpg" alt="" />
-    </div>
-  </div>
-<script src="./js/build.js"></script></body>
-</html>
+Html Webpack Plugin:
+<pre>
+  TypeError: Cannot read property 'tap' of undefined
+  
+  - ExternalModuleFactoryPlugin.js:17 ExternalModuleFactoryPlugin.apply
+    [webpack]/[_webpack@4.46.0@webpack]/lib/ExternalModuleFactoryPlugin.js:17:37
+  
+  - ExternalsPlugin.js:16 
+    [webpack]/[_webpack@4.46.0@webpack]/lib/ExternalsPlugin.js:16:63
+  
+  
+  - Hook.js:14 Hook.CALL_DELEGATE [as _call]
+    [node_global]/[webpack]/[_tapable@2.2.0@tapable]/lib/Hook.js:14:14
+  
+  - Compiler.js:1033 
+    [node_global]/[webpack]/lib/Compiler.js:1033:23
+  
+  
+  - Hook.js:18 Hook.CALL_ASYNC_DELEGATE [as _callAsync]
+    [node_global]/[webpack]/[_tapable@2.2.0@tapable]/lib/Hook.js:18:14
+  
+  - Compiler.js:1030 Compiler.compile
+    [node_global]/[webpack]/lib/Compiler.js:1030:28
+  
+  - Compiler.js:497 Compiler.runAsChild
+    [node_global]/[webpack]/lib/Compiler.js:497:8
+  
+  - child-compiler.js:110 
+    [webpack]/[_html-webpack-plugin@4.5.2@html-webpack-plugin]/lib/child-compiler.js:110:21
+  
+</pre><script src="auto/./js/build.js"></script>

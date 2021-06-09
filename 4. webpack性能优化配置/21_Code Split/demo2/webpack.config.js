@@ -54,7 +54,7 @@ module.exports = {
         // 移除空格
         collapseWhitespace: true,
         // 移除注释
-        removeComments: true
+        removeComments: true 
       }
     })
   ],

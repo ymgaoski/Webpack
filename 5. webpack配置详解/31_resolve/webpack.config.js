@@ -41,6 +41,8 @@ module.exports = {
     alias: {
       $css: path.resolve('src/css')
     },
+    // 入口文件的名字，默认找的是index.js
+    // mainFiles:[],
     // 配置省略文件后缀名，就是哪里文件import的时候可以不用填后缀，默认配置了 js 和 json
     extensions: ['.js','.json','.css'],
     // 告诉webpack解析模块去找哪个目录，当前目录找不到就会向上找，默认配置的是 node_modules

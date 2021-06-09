@@ -31,8 +31,16 @@ module.exports = {
         // cnpm i style-loader css-loader -D
         use: [
           // 将js中的css字符串生成style节点，添加到 html head 的style标签中
-          "style-loader",
+          // 对象配置方式
+          {
+            loader: 'style-loader'
+            options: {
+              // 将样式插入到页面的最上面，防止覆盖原来html中Style的样式
+              insertAt: 'top'
+            }
+          },
           // 将css文件使用commonjs模块化的方式加入到js中
+          // 字符串配置模式
           "css-loader",
         ],
       },

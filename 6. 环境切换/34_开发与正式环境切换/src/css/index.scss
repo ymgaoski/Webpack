@@ -1,0 +1,30 @@
+.container{
+ 
+  .pic1{
+    width: 100px;
+    height: 100px;
+    background-image: url(../img/pic1.png);
+    background-size: 100px;
+    background-repeat: no-repeat;
+    margin: 20px;
+  }
+  .pic2{
+    width: 200px;
+    height: 200px;
+    background-image: url(../img/pic2.jpg);
+    background-size: 200px;
+    background-repeat: no-repeat;
+    margin: 20px;
+  }
+  .pic3{
+    width: 300px;
+    height: 300px;
+    background-image: url(../img/pic3.jpg);
+    background-size: 300px;
+    background-repeat: no-repeat;
+    margin: 20px;
+  }
+  .pic4{
+    width: 400px;
+  }
+}

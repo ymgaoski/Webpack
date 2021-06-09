@@ -33,8 +33,8 @@
  *    
  *    一：开发环境：速度快，调试更友好
  *      速度快（eval>inline>cheap>...）
- *        eval-cheap-souce-map
- *        eval-souce-map
+ *        eval-cheap-source-map
+ *        eval-source-map
  *      调试更友好
  *        source-map
  *        cheap-module-source-map
@@ -154,5 +154,5 @@ module.exports = {
   },
 
   // 开启SourceMap
-  devtool: 'eval-cheap-souce-map'
+  devtool: 'eval-cheap-source-map'
 }

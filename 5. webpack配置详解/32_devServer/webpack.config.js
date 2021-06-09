@@ -37,6 +37,12 @@ module.exports = {
 
   // 开发服务器
   devServer: {
+    // 提供的方法 钩子，用来前端模拟数据
+    before(app){
+      app.get('/api/user', (req,res) => {
+        res.json({name:'xgao'});
+      })
+    },
     // 项目主目录
     contentBase: path.resolve(__dirname,'build'),
     // 监听目录中任意文件变动就重新加载

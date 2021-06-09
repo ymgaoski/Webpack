@@ -18,6 +18,7 @@ module.exports = {
 
   // loader
   module:{
+    noParse: /jquery/, // 不去解析jquery中的依赖库
     rules:[
 
     ]

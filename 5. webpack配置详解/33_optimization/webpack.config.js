@@ -97,7 +97,7 @@ module.exports = {
     minimizer: [
       // 配置生产环境压缩方案： js和css
       new TerserWebpackPlugin({
-        // 开户缓存 
+        // 开启缓存 
         cache: true,
         // 开启多进程打包
         parallel: true,
