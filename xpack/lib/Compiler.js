@@ -8,6 +8,10 @@ const t = require('@babel/types');
 const traverse = require('@babel/traverse').default;
 // @babel/generator 将替换好的节点生成
 const generator = require('@babel/generator').default;
+// ejs JS模板
+const ejs = require('ejs');
+// 事件流处理
+const {SyncHook} = require('./tapable.js');
 
 class Compiler{
 
@@ -21,12 +25,61 @@ class Compiler{
     this.modules = {};
     // 工作路径
     this.root = process.cwd();
+
+    // 初始化钩子
+    this.hooks = {
+      compile: new SyncHook(),
+      afterCompile: new SyncHook(),
+      afterPlulgins: new SyncHook(),
+      run: new SyncHook(),
+      emit: new SyncHook(),
+      done: new SyncHook()
+    }
+
+    // plugins插件处理
+    const plugins = this.config.plugins;
+    if (Array.isArray(plugins)){
+      plugins.forEach(plugin => {
+        // 将当前 compiler 传入
+        plugin.apply(this);
+      })
+      // 插件处理完成
+      this.hooks.afterPlulgins.call();
+    }
   }
 
   // 读取模块数据
   getSource(modulePath){
+
     // 获取模块内容
-    const source = fs.readFileSync(modulePath,'utf-8');
+    let source = fs.readFileSync(modulePath,'utf-8');
+
+    // 获取loader配置的rules
+    const rules = this.config.module.rules;
+    for(let i=0; i < rules.length; i++){
+      const rule = rules[i];
+      if (rule.test.test(modulePath)){
+
+        // console.log(rule,'rule =>>>>>');
+
+        // 匹配到 loader模块
+        let len = rule.use.length - 1;
+        
+        // 递归倒序遍历要处理的loader
+        function normalLoader(){
+          // 加载loader
+          let loader = require(rule.use[len]);
+          len--;
+          // 执行loader
+          source = loader(source);
+          if (len >= 0){
+            normalLoader();
+          }
+        }
+        normalLoader();
+      }
+    }
+
     return source;
   }
 
@@ -36,6 +89,7 @@ class Compiler{
    * @param {父目录} parentPath 
    */
   parse(source,parentPath){
+    // console.log(source,'=======>>');
     // AST解析语法树
     let ast = babylon.parse(source);
     // 依赖数组
@@ -54,7 +108,7 @@ class Compiler{
           // 兼容 './index' or './index.js'
           moduleName = moduleName + (path.extname(moduleName) ? '' : '.js');
           // './src/index.js'
-          moduleName = './' + path.join(parentPath,moduleName);
+          moduleName = ('./' + path.join(parentPath,moduleName)).replace(/\\/g,'/');
 
           // 添加到依赖列表
           dependencies.push(moduleName);
@@ -67,6 +121,7 @@ class Compiler{
 
     // 生成源码
     let sourceCode = generator(ast).code;
+    // console.log('parse end <<<<<');
     return {sourceCode, dependencies};
   }
 
@@ -81,8 +136,8 @@ class Compiler{
     // console.log(source,'source');
 
     // 模块ID，需要相对路径如： ./index.js = modulePath - this.rootPath
-    const moduleName = './'+path.relative(this.root,modulePath);
-    console.log(moduleName,'moduleName');
+    const moduleName = ('./'+path.relative(this.root,modulePath)).replace(/\\/g,'/');
+    // console.log(moduleName,'moduleName');
 
     if(isEntry){
       this.entryId = moduleName;
@@ -104,15 +159,46 @@ class Compiler{
 
   // 发射文件
   emitFile(){
+    // 开始发射文件
+    this.hooks.emit.call();
 
+    // 输出的路径
+    const outFilePath = path.join(this.config.output.path,this.config.output.filename);
+
+    // 读取模板数据
+    const templateStr = this.getSource(path.join(__dirname,'template.ejs')).toString();
+
+    // 使用模板引擎渲染数据 
+    const code = ejs.render(templateStr,{entryId: this.entryId,modules: this.modules});
+
+    // 资源文件列表
+    this.assets = {};
+    this.assets[outFilePath] = code;
+
+    // 生成文件
+    fs.writeFileSync(outFilePath,code);
+    
+    // 打包完成
+    this.hooks.done.call();
+    // console.log('文件打包成功！');
   }
 
   // 运行并编译
   run(){
+
+    // 开始运行
+    this.hooks.run.call();
+    // 开始编译
+    this.hooks.compile.call();
+
     // 构建模块
     this.buildModule(path.resolve(this.root,this.entry),true);
-    console.log(this.modules);
+
+    // 编译完成
+    this.hooks.afterCompile.call();
+
     // 生成文件
+    this.emitFile();
   }
 }
 

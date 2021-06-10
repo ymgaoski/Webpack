@@ -1,36 +1,60 @@
 (function () {
   var __webpack_modules__ = {
-    "./src/a.js": function (
-      module,
-      __unused_webpack_exports,
-      __webpack_require__
-    ) {
-      eval(
-        "let b = __webpack_require__(/*! ./base/b.js */ \"./src/base/b.js\");\r\nmodule.exports = 'a-' + b;\n\n//# sourceURL=webpack:///./src/a.js?"
-      );
-    },
+    
+      "./src/index.js": function (
+        module,
+        __unused_webpack_exports,
+        __webpack_require__
+      ) {
+        eval(
+          `let a = __webpack_require__("./src/a.js"); // 引入样式文件
 
-    "./src/base/b.js": function (module) {
-      eval(
-        "module.exports = 'b';\n\n//# sourceURL=webpack:///./src/base/b.js?"
-      );
-    },
 
-    "./src/index.js": function (
-      __unused_webpack_module,
-      __unused_webpack_exports,
-      __webpack_require__
-    ) {
-      eval(
-        "let a = __webpack_require__(/*! ./a.js */ \"./src/a.js\");\r\nconsole.log(a,'index');\n\n//# sourceURL=webpack:///./src/index.js?"
-      );
-    },
+__webpack_require__("./src/css/index.scss");
+
+console.log(a, 'index');`
+        );
+      },
+    
+      "./src/a.js": function (
+        module,
+        __unused_webpack_exports,
+        __webpack_require__
+      ) {
+        eval(
+          `let b = __webpack_require__("./src/base/b.js");
+
+module.exports = 'a-' + b;`
+        );
+      },
+    
+      "./src/base/b.js": function (
+        module,
+        __unused_webpack_exports,
+        __webpack_require__
+      ) {
+        eval(
+          `module.exports = 'b';`
+        );
+      },
+    
+      "./src/css/index.scss": function (
+        module,
+        __unused_webpack_exports,
+        __webpack_require__
+      ) {
+        eval(
+          `const style = document.createElement('style');
+style.innerHTML = "body {\\n  background: red;\\n}\\nbody .main {\\n  color: green;\\n}";
+document.head.appendChild(style);`
+        );
+      },
+    
   };
 
   var __webpack_module_cache__ = {};
 
   function __webpack_require__(moduleId) {
-    debugger
     if (__webpack_module_cache__[moduleId]) {
       return __webpack_module_cache__[moduleId].exports;
     }

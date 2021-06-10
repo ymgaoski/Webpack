@@ -10,5 +10,6 @@ const Compiler = require('../lib/Compiler.js');
 
 // 创建编译类实例
 const compiler = new Compiler(config);
+
 // 运行编译
 compiler.run();
